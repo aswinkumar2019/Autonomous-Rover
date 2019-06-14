@@ -92,6 +92,7 @@ def process(result, labels, tensor_name, threshold, top_k,search):
                 bz2.off()
                 bz3.off()
                 bz4.on()
+                sleep(2)
     return [' %s (%.2f)' % (labels[index], prob) for index, prob in pairs]
 
 
