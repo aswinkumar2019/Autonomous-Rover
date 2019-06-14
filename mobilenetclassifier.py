@@ -19,10 +19,11 @@ from gpiozero import Buzzer
 from aiy.pins import (PIN_A, PIN_B, PIN_C, PIN_D)
 from picamera import PiCamera, Color
 
+from time import sleep
 from aiy.vision import inference
 from aiy.vision.models import utils
 #find = ''
-
+check = 0
 bz1=Buzzer(PIN_A)
 bz2=Buzzer(PIN_B)
 bz3=Buzzer(PIN_C)
@@ -56,20 +57,41 @@ def process(result, labels, tensor_name, threshold, top_k,search):
         print(labels[x])
         if labels[x] == search:
              if(probs[x]>0.5):
+                check = 0
                 print("Object is found")
                 print(probs[x])
                 bz1.on()
                 bz2.off()
-                bz3.off()
+                bz3.on()
+                bz4.off()
              elif(probs[x]>0.2):
                 print("Not sure")
                 print(probs[x])
-               #  bz1.on()
-               #  bz2.on()
-               #  bz3.on()
+                if(check>probs[x]):
+                    bz1.on()
+                    bz2.off()
+                    bz3.on()
+                    bz4.off()
+                check = probs[x]
+                else:
+                    bz1.off()
+                    bz2.on()
+                    bz3.off()
+                    bz4.on()
+                    sleep(2)
+                    bz1.off()
+                    bz2.on()
+                    bz3.on()
+                    bz4.off()
+                    sleep(2)
              else:
-                print("Object not found")
+                check = 0
+                print("Object not found,Searching")
                 print(probs[x])
+                bz1.on()
+                bz2.off()
+                bz3.off()
+                bz4.on()
     return [' %s (%.2f)' % (labels[index], prob) for index, prob in pairs]
 
 
@@ -115,6 +137,4 @@ def main():
             #        message += '\nWith %.1f FPS.' % camera_inference.rate
             #    print(message)
 
-
-if __name__ == '__main__':
-    main()
+main()
