@@ -1,3 +1,12 @@
 # Autonomous-Rover
-We give the name of the object to hit and,the vision kit searches for the object and automatically hits the target.
-Integration of intel realsense is in progress
+**PROUDLY A CONTRIBUTOR TO REALSENSE ROS PACKAGE**
+
+USED SERVICES:
+ROS(Robot operating system)
+teleop keyboard
+
+
+Hardware: intel realsense,neato lidar
+We used intel Realsense IMU for navigation of autonomous rover.
+
+This readme will be updated later
